@@ -45,7 +45,7 @@ function createAddWindow() {
     addWindow = new BrowserWindow({
         width: 300,
         height: 200,
-        title: 'Add Shopping List Items',
+        title: 'Add Student Data',
         webPreferences: { nodeIntegration: true }
     });
 
@@ -80,20 +80,20 @@ const mainMenuTemplate = [
     {
         label: 'File',
         submenu: [
-            {
-                label: 'Add Item',
-                click() {
-                    createAddWindow();
+            // {
+            //     label: 'Add Student',
+            //     click() {
+            //         createAddWindow();
 
-                }
-            },
+            //     }
+            // },
             
-            {
-                label: 'Clear Items',
-                click(){
-                    mainWindow.webContents.send('item:clear');
-                }
-            },
+            // {
+            //     label: 'Clear Items',
+            //     click(){
+            //         mainWindow.webContents.send('item:clear');
+            //     }
+            // },
             {
                 label: 'Quit',
                 accelerator: process.platform == 'darwin' ? 'Command+Q' : 'Ctrl+Q',
