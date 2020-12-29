@@ -6,6 +6,13 @@ const { platform } = require('os');
 
 const { app, BrowserWindow, Menu, ipcMain } = electron;
 
+var knex = require("knex")({
+	client: "sqlite3",
+	connection: {
+		filename: path.join(__dirname, './school_data.db')
+	}
+});
+
 //SET ENV(environment)
 process.env.NODE_ENV = 'production';
 
@@ -28,6 +35,13 @@ app.on('ready', function () {
         slashes: true
     }));
 
+    ipcMain.on("mainWindowLoaded", function () {
+		let result = knex.select("Name").from("Student")
+		result.then(function(rows){
+			mainWindow.webContents.send("resultSent", rows);
+		})
+    });
+    
     //quite app when closed
     mainWindow.on('closed', function () {
         app.quit();

@@ -3,9 +3,24 @@
   <head>
     <meta charset="UTF-8">
     <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+    <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
     <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self';"> -->
     <title>School</title>
+    <script>
+      const electron = require("electron");
+      const ipc = electron.ipcRenderer;
+      document.addEventListener("DOMContentLoaded", function(){
+          ipc.send("mainWindowLoaded")
+          ipc.on("resultSent", function(evt, result){
+              let resultEl = document.getElementById("result");
+              console.log(result);
+              for(var i = 0; i < result.length;i++){
+                  resultEl.innerHTML += "Name: " + result[i].Name.toString() + "<br/>";
+              }
+          });
+      });
+  </script>
   </head>
   <body>
     <h1>School Data</h1>
@@ -29,7 +44,9 @@
         </tr>
       </table>
     </div>
+    <p id="result"></p>
     <!-- You can also require other files to run in this process -->
-    <script src="./renderer.js"></script>
+    <!-- <script src="./renderer.js"></script> -->
+    
   </body>
 </html>
